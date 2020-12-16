@@ -30,13 +30,11 @@ app.get("/api/timestamp", function (req,res){
 
 app.get("/api/timestamp/:dateInput",function (req,res) {
   let datestringinput = req.params.dateInput;
+  let dateObject = new Date(datestringinput);
   if (/\d{5,}/.test(datestringinput)) {
     let dateInt = parseInt(datestringinput);
-    //Date regards numbers as unix timestamps, strings are processed differently
-    res.json({ unix: datestringinput, utc: new Date(dateInt).toUTCString() });
+    res.json({ unix: dateInt, utc: new Date(dateInt).toUTCString() });
   } else {
-    let dateObject = new Date(datestringinput);
-
     if (dateObject.toString() === "Invalid Date") {
       res.json({ error: "Invalid Date" });
     } else {
